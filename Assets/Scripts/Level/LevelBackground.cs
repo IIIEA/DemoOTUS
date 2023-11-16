@@ -7,40 +7,40 @@ namespace ShootEmUp
   {
     [SerializeField] private Params _params;
     
-    private float startPositionY;
-    private float endPositionY;
-    private float movingSpeedY;
-    private float positionX;
-    private float positionZ;
-    private Transform myTransform;
+    private float _startPositionY;
+    private float _endPositionY;
+    private float _movingSpeedY;
+    private float _positionX;
+    private float _positionZ;
+    private Transform _myTransform;
     
     private void Awake()
     {
-      startPositionY = _params.StartPositionY;
-      endPositionY = _params.EndPositionY;
-      movingSpeedY = _params.MovingSpeedY;
-      myTransform = transform;
+      _startPositionY = _params.StartPositionY;
+      _endPositionY = _params.EndPositionY;
+      _movingSpeedY = _params.MovingSpeedY;
+      _myTransform = transform;
 
-      var position = myTransform.position;
-      positionX = position.x;
-      positionZ = position.z;
+      var position = _myTransform.position;
+      _positionX = position.x;
+      _positionZ = position.z;
     }
 
     private void FixedUpdate()
     {
-      if (myTransform.position.y <= endPositionY)
+      if (_myTransform.position.y <= _endPositionY)
       {
-        myTransform.position = new Vector3(
-          positionX,
-          startPositionY,
-          positionZ
+        _myTransform.position = new Vector3(
+          _positionX,
+          _startPositionY,
+          _positionZ
         );
       }
 
-      myTransform.position -= new Vector3(
-        positionX,
-        movingSpeedY * Time.fixedDeltaTime,
-        positionZ
+      _myTransform.position -= new Vector3(
+        _positionX,
+        _movingSpeedY * Time.fixedDeltaTime,
+        _positionZ
       );
     }
 

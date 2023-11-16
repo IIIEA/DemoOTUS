@@ -25,11 +25,8 @@ namespace ShootEmUp
 
     public event Action<Bullet, Collision2D> OnCollisionEntered;
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-      print($"Collide with : {collision.gameObject.name}");
+    private void OnCollisionEnter2D(Collision2D collision) => 
       OnCollisionEntered?.Invoke(this, collision);
-    }
 
     public void SetVelocity(Vector2 velocity) => 
       _rigidbody2D.velocity = velocity;

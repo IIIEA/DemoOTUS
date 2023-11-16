@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f607d62c36cf429b98fd5e0d29773f70, type: 3}
   m_Name: PlayerBullet
   m_EditorClassIdentifier: 
-  <PhysicsLayer>k__BackingField: 10
+  <PhysicsLayer>k__BackingField: 14
   <Color>k__BackingField: {r: 0, g: 0.079182625, b: 1, a: 1}
   <Damage>k__BackingField: 5
-  <Speed>k__BackingField: 15
+  <Speed>k__BackingField: 4

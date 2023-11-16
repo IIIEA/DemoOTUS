@@ -45,7 +45,7 @@ namespace ShootEmUp
       _bulletSystem.FlyBulletByArgs(new BulletArgs
       {
         IsPlayer = false,
-        PhysicsLayer = (int)PhysicsLayer.ENEMY,
+        PhysicsLayer = (int)PhysicsLayer.ENEMY_BULLET,
         Color = Color.red,
         Damage = 1,
         Position = position,
