@@ -2,17 +2,17 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-  public sealed class InputManager : MonoBehaviour
+  public sealed class CharacterInputListener : MonoBehaviour
   {
     [SerializeField] private GameObject _character;
-    [SerializeField] private CharacterController _characterController;
+    [SerializeField] private AttackComponent _characterAttackComponent;
 
     private float _horizontalDirection;
 
     private void Update()
     {
       if (Input.GetKeyDown(KeyCode.Space)) 
-        _characterController.Fire = true;
+        _characterAttackComponent.Fire = true;
 
       if (Input.GetKey(KeyCode.LeftArrow))
         _horizontalDirection = -1;

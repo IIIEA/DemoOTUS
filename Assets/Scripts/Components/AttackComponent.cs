@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-  public sealed class CharacterController : MonoBehaviour
+  [RequireComponent(typeof(WeaponComponent))]
+  public sealed class AttackComponent : MonoBehaviour
   {
-    [SerializeField] private GameObject _character;
     [SerializeField] private BulletSystem _bulletSystem;
     [SerializeField] private BulletConfig _bulletConfig;
 
@@ -26,7 +26,7 @@ namespace ShootEmUp
     
     private void OnFlyBullet()
     {
-      var weapon = _character.GetComponent<WeaponComponent>();
+      var weapon = GetComponent<WeaponComponent>();
       _bulletSystem.FlyBulletByArgs(new BulletArgs
       {
         IsPlayer = true,
