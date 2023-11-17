@@ -5,17 +5,15 @@ namespace ShootEmUp
 {
   public sealed class BulletSystem : MonoBehaviour
   {
-    [SerializeField] private Transform _worldTransform;
     [SerializeField] private LevelBounds _levelBounds;
     [SerializeField] private BulletsFactory _bulletsFactory;
-    
-    private readonly HashSet<Bullet> _activeBullets = new();
+
     private readonly List<Bullet> _cache = new();
 
     private void FixedUpdate()
     {
       _cache.Clear();
-      _cache.AddRange(_activeBullets);
+      _cache.AddRange(_bulletsFactory.ActiveObjects);
 
       for (int i = 0, count = _cache.Count; i < count; i++)
       {
@@ -29,10 +27,10 @@ namespace ShootEmUp
 
     public void FlyBulletByArgs(BulletArgs args)
     {
-      var bullet = _bulletsFactory.GetInitializedBullet(args, _worldTransform);
-      bullet.OnCollisionEntered += OnBulletCollision;
+      var bullet = _bulletsFactory.GetInitializedInstance(args);
       
-      _activeBullets.Add(bullet);
+      if (bullet)
+        bullet.OnCollisionEntered += OnBulletCollision;
     }
 
     private void OnBulletCollision(Bullet bullet, Collision2D collision)
@@ -43,11 +41,8 @@ namespace ShootEmUp
 
     private void RemoveBullet(Bullet bullet)
     {
-      if (_activeBullets.Remove(bullet))
-      {
+      if (_bulletsFactory.ReleaseInstance(bullet))
         bullet.OnCollisionEntered -= OnBulletCollision;
-        _bulletsFactory.ReleaseBullet(bullet);
-      }
     }
   }
 }

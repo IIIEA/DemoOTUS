@@ -9,34 +9,28 @@ namespace ShootEmUp
     [SerializeField] private EnemyFactory _enemyFactory;
     [SerializeField] private BulletSystem _bulletSystem;
 
-    private readonly HashSet<GameObject> _activeEnemies = new();
-
     private IEnumerator Start()
     {
       while (true)
       {
         yield return new WaitForSeconds(1);
-        var enemy = _enemyFactory.GetInitializedEnemy();
-        
+        var enemy = _enemyFactory.GetInitializedInstance();
+
         if (enemy != null)
         {
-          if (_activeEnemies.Add(enemy))
-          {
-            enemy.GetComponent<HitPointsComponent>().OnHpEmpty += OnDestroyed;
-            enemy.GetComponent<EnemyAttackAgent>().OnFire += OnFire;
-          }
+          enemy.GetComponent<HitPointsComponent>().OnHpEmpty += OnDestroyed;
+          enemy.GetComponent<EnemyAttackAgent>().OnFire += OnFire;
         }
       }
     }
 
     private void OnDestroyed(GameObject enemy)
     {
-      if (_activeEnemies.Remove(enemy))
+      if (_enemyFactory.ReleaseInstance(enemy))
       {
         enemy.GetComponent<HitPointsComponent>().OnHpEmpty -= OnDestroyed;
         enemy.GetComponent<EnemyAttackAgent>().OnFire -= OnFire;
 
-        _enemyFactory.ReleaseEnemy(enemy);
       }
     }
 

@@ -10,12 +10,14 @@ namespace ShootEmUp
     private readonly Transform _container;
     private readonly Queue<T> _pool;
     private readonly T _prefab;
+    private readonly bool _isAutoExpand;
 
-    public ObjectPool(T prefab, int size = DEFAULT_POOL_SIZE, Transform container = null)
+    public ObjectPool(T prefab, int size = DEFAULT_POOL_SIZE, Transform container = null, bool isAutoExpand = true)
     {
       _pool = new Queue<T>(size);
       _prefab = prefab;
       _container = container;
+      _isAutoExpand = isAutoExpand;
       
       for (var i = 0; i < size; i++)
         CreateDisabledInstance(_prefab, container);
@@ -28,10 +30,8 @@ namespace ShootEmUp
         result.SetActiveState(true);
         return result;
       }
-
-      var newInstance = CreateDisabledInstance(_prefab, _container);
-
-      return newInstance;
+      
+      return _isAutoExpand ? CreateDisabledInstance(_prefab, _container) : null;
     }
 
     public void Release(T instance, Transform container = null)
